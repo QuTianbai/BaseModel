@@ -7,7 +7,7 @@
 //
 
 #import "DKKeyMapManager.h"
-
+#import "NSString+Extensions.h"
 /**
  是否有大写字母
 
@@ -20,23 +20,23 @@ BOOL needsToEncode(NSString *originalKey) {
 }
 
 /**
- 去除@"_",并且全部小写
+ 去除所有@"_",并且全部小写
 
  @param originalKey originalKey
- @return 去除@"_",并且全部小写
+ @return 去除所有@"_",并且全部小写
  */
 NSString *decodeKey(NSString *originalKey) {
-    // 首字母大写,并且去除@"_"
+    // 单词首字母大写,并且去除@"_"
     NSString *capitalizedKey = [[originalKey capitalizedString] replaceOldString:@"_" WithNewString:@""];
     // 首字母变小写
     return [NSString stringWithFormat:@"%@%@",[[capitalizedKey substringToIndex:1] lowercaseString],[capitalizedKey substringFromIndex:1]];
 }
 
 /**
- 在原来大写字母前加@"_",并且全部转换为小写字母
+ 在原来每个大写字母前加@"_",并且全部转换为小写字母
 
  @param originalKey originalKey
- @return <#return value description#>
+ @return 在原来每个大写字母前加@"_",并且全部转换为小写字母
  */
 NSString *encodeKey(NSString *originalKey) {
     NSCharacterSet *uppercaseLetterSet = [NSCharacterSet uppercaseLetterCharacterSet];
@@ -86,7 +86,7 @@ static DKKeyMapManager *keyMapManager;
  */
 + (NSString *)decodeKey:(NSString *)originalKey {
     @synchronized (keyMapManager) {
-        DKAssert([NSString isNotBlank:originalKey]);
+        assert([NSString isNotBlank:originalKey]);
         
         if ([originalKey isContain:@"_"]) {
             NSString *mappedKey = [keyMapManager.decodedKeyMapDict objectForKey:originalKey];
@@ -110,7 +110,7 @@ static DKKeyMapManager *keyMapManager;
  */
 + (NSString *)encodeKey:(NSString *)originalKey {
     @synchronized (keyMapManager) {
-        DKAssert([NSString isNotBlank:originalKey]);
+        assert([NSString isNotBlank:originalKey]);
         
         if (needsToEncode(originalKey)) {
             NSString *mappedKey = [keyMapManager.encodedKeyMapDict objectForKey:originalKey];
