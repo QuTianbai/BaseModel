@@ -21,10 +21,10 @@
 `- (NSString *)baseUrl`
 
 转字典时要忽略的属性
-- (void)addIgnoredObjects:(NSArray *)objects
+`- (void)addIgnoredObjects:(NSArray *)objects`
 
 是否使用KeyMap
-- (BOOL)enableKeyMapManager
+`- (BOOL)enableKeyMapManager`
 
 #### DKResponseModel
 
